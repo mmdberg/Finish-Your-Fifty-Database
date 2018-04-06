@@ -34,8 +34,8 @@ app.get('/api/v1/users/:id', async (request, response) => {
 }
 });
 
-app.get('/api/v1/races/', (request, response) => {
-  const id = parseInt(request.params.id)
+app.get('/api/v1/races', (request, response) => {
+
   database('races').select()
     .then((races) => {
       response.status(200).json(races);
@@ -45,14 +45,19 @@ app.get('/api/v1/races/', (request, response) => {
     });
 });
 
+app.get('/api/v1/races/:id', (request, response) => {
+  // const id = parseInt(request.params.id)
+  
+})
+
 app.post('/api/v1/users', (request, response) => {
   const user = request.body;
 
-  for (let requiredParameter of ['userName']) {
+  for (let requiredParameter of ['userName', 'email', 'password']) {
     if(!user[requiredParameter]) {
       return response 
         .status(422)
-        .send({error: `You're missing a ${requiredParameter} property.` })
+        .send({error: `You're missing a(n) ${requiredParameter}.` })
     }
   }
 
@@ -62,6 +67,26 @@ app.post('/api/v1/users', (request, response) => {
     })
     .catch(error => {
       response.status(500).json({ error });
+    });
+});
+
+app.post('/api/v1/races', (request, response) => {
+  const race = request.body;
+
+  for (let requiredParameter of ['raceName', 'state', 'time', 'distance', 'user_id']) {
+    if(!race[requiredParameter]) {
+      return response 
+        .status(422)
+        .send({error: `You're missing a(n) ${requiredParameter}.`})
+    }
+  }
+
+  database('races').insert(race, 'id')
+    .then(race => {
+      response.status(201).json({id: race[0] })
+    })
+    .catch(error => {
+      response.status(500).json({ error })
     });
 });
 
