@@ -23,17 +23,19 @@ app.get('/api/v1/users', (request, response) => {
     });
 });
 
-// app.get('/api/v1/users/:id', (request, response) => {
-//   database('users').select()
-//     .then((users) => {
-//       response.status(200).json(users.find(user => user.id === id))
-//     })
-//     .catch((error) => {
-//       response.status(500).json({ error });
-//     });
-// });
+app.get('/api/v1/users/:id', async (request, response) => {
+  const id = parseInt(request.params.id)
+  try {
+  const users = await database('users').select()
+  const user = users.find(user => user.id === id)
+  response.status(200).json(user)
+} catch (error) {
+  response.status(500).json(error)
+}
+});
 
 app.get('/api/v1/races/', (request, response) => {
+  const id = parseInt(request.params.id)
   database('races').select()
     .then((races) => {
       response.status(200).json(races);
