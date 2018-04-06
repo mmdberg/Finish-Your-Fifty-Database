@@ -26,12 +26,12 @@ app.get('/api/v1/users', (request, response) => {
 app.get('/api/v1/users/:id', async (request, response) => {
   const id = parseInt(request.params.id)
   try {
-  const users = await database('users').select()
-  const user = users.find(user => user.id === id)
-  response.status(200).json(user)
-} catch (error) {
-  response.status(500).json(error)
-}
+    const users = await database('users').select()
+    const user = users.find(user => user.id === id)
+    response.status(200).json(user)
+  } catch (error) {
+    response.status(500).json(error)
+  }
 });
 
 app.get('/api/v1/races', (request, response) => {
@@ -45,10 +45,16 @@ app.get('/api/v1/races', (request, response) => {
     });
 });
 
-app.get('/api/v1/races/:id', (request, response) => {
-  // const id = parseInt(request.params.id)
-  
-})
+app.get('/api/v1/races/:id', async (request, response) => {
+  const id = parseInt(request.params.id)
+  try {
+    const races = await database('races').select()
+    const userRaces = races.filter(race => race.user_id === id)
+    response.status(200).json(userRaces)
+  } catch (error) {
+    response.status(500).json(error)
+  } 
+});
 
 app.post('/api/v1/users', (request, response) => {
   const user = request.body;
