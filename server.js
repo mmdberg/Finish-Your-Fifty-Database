@@ -109,7 +109,7 @@ app.post('/api/v1/users/new', (request, response) => {
 app.post('/api/v1/races', (request, response) => {
   const race = request.body;
 
-  for (let requiredParameter of ['raceName', 'state', 'time', 'distance', 'user_id']) {
+  for (let requiredParameter of ['raceName', 'state', 'city', 'time', 'distance', 'completed', 'user_id']) {
     if(!race[requiredParameter]) {
       return response 
         .status(422)
