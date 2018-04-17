@@ -20,6 +20,12 @@ app.use((request, response, next) => {
   next()
 })
 
+app.use((request, response, next) => {
+  response.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+  next()
+})
+
+
 app.use(passport.initialize());
 app.use(passport.session());
 
