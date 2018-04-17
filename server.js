@@ -113,7 +113,7 @@ app.post('/api/v1/races', (request, response) => {
     if(!race[requiredParameter]) {
       return response 
         .status(422)
-        .send({error: `You're missing a(n) ${requiredParameter}.`})
+        .send({error: `You're missing a ${requiredParameter}.`})
     }
   }
 
@@ -125,6 +125,17 @@ app.post('/api/v1/races', (request, response) => {
       response.status(500).json({ error })
     });
 });
+
+app.delete('/api/v1/races/:id', async (request, response) => {
+  const id = parseInt(request.params.id)
+  try {
+    await database('races').where('id', id).del()
+    return response.status(201).json({message: 'Deleted!'})
+  } catch (error) {
+    response.status(404).json({error: error})
+  } 
+});
+
 
 app.listen(3000, () => {
   console.log('Express Intro running on localhost:3000');
