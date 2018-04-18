@@ -4,6 +4,6 @@ Finish Your Fifty is an application for runners with the goal to run a race in e
 
 The frontend was built with React, Redux and React Router and the backend was built with Express and Knex.
 
-Backend: https://github.com/mmdberg/Finish-Your-Fifty
+Frontend: https://github.com/mmdberg/Finish-Your-Fifty
 
 ![Home Page](FYF-home.png)
