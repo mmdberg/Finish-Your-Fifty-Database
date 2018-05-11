@@ -4,8 +4,6 @@ const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 const bodyParser = require('body-parser');
-const passport = require('passport');
-
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -25,14 +23,9 @@ app.use((request, response, next) => {
   next()
 })
 
-// app.use(passport.initialize());
-// app.use(passport.session());
+app.set('port', process.env.PORT || 3000)
 
-// app.post('/oauth/requestToken.php', 
-//   passport.authenticate('local'), 
-//   (request, response) => {
-//     response.redirect('/users/' + request.user)
-//   })
+app.locals.title = 'Finish Your Fifty'
 
 app.get('/api/v1/users', (request, response) => {
   database('users').select()
@@ -142,8 +135,8 @@ app.delete('/api/v1/races/:id', async (request, response) => {
 });
 
 
-app.listen(3000, () => {
-  console.log('Express Intro running on localhost:3000');
+app.listen(app.get('port'), () => {
+  console.log(`${app.locals.title} is running on ${app.get('port')}`);
 });
 
 
