@@ -25,15 +25,14 @@ app.use((request, response, next) => {
   next()
 })
 
+// app.use(passport.initialize());
+// app.use(passport.session());
 
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.post('/oauth/requestToken.php', 
-  passport.authenticate('local'), 
-  (request, response) => {
-    response.redirect('/users/' + request.user)
-  })
+// app.post('/oauth/requestToken.php', 
+//   passport.authenticate('local'), 
+//   (request, response) => {
+//     response.redirect('/users/' + request.user)
+//   })
 
 app.get('/api/v1/users', (request, response) => {
   database('users').select()
